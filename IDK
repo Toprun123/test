@@ -1,0 +1,19 @@
+
+
+    write a ray tracer. Ray tracers are naturally recursive, so this is a good fit with Haskell.
+
+    write a program to convert a 3D model of some kind (maybe just a depth function) to an autostereogram (aka, a Magic Eye puzzle)
+
+    generate different kinds of fractals. Also naturally recursive, so a good Haskell fit.
+
+    do a Fourier transform on input from a microphone, and make some observations about and then devise an algorithm to programmatically recognize different vowel sounds
+
+    generate a random maze (there are many ways to do this, so it's a neat problem to research)
+
+    pick a favorite nontrivial algorithm, and try to implement it in Haskell. I had a phenomenal time with Tarjan's union-find, and still remember the moment I realized that the purely functional API I wanted was just equivalence relations (Note: my implementation required a bunch of unsafePerformIO -- don't make the mistake of thinking unsafePerformIO is good practice for production code, but ALSO don't be afraid to play with it, either! You'll notice a lot of well-known Haskellers have a fantastic time abusing Haskell's runtime system, because it's such great fun.)
+
+    If you're the creative type, I think it's a lot of fun to build simple graphics and animations and games. If you'll excuse the self-promotion, CodeWorld (http://code.world/haskell) is a great tool and library for doing that, and makes it easy to post what you build to share with others.
+
+    Minimax for various games (chess, othello, mancala, tic-tac-toe) also makes a cool and not-too-difficult Haskell project, and is again naturally recursive so that if fits well. (On the other hand, memoization is often needed for performance, and that makes things a bit messier; but a lot of work has been done on nice ways to memoize in Haskell, so you aren't starting from scratch.
+
+    Parsers and languages are a popular thing to do in Haskell, too. They don't appeal to me as much as others, I guess, but I did write the XML and HTML library for Snap, so maybe I don't hate it that much...
