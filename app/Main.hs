@@ -19,7 +19,7 @@ format_p x p =   "(" ++ (show x) ++ (if y> 1
 
 prime_factors :: Integer -> String
 prime_factors n = intercalate "" (
-                    nub [ format_p x p | x<-p])
+                    nub [format_p x p | x<-p])
     where p = factors n 2
 
 multiples :: Integer -> Integer -> [Integer]
@@ -37,13 +37,22 @@ fibonacci x y
     | x > 4000000 = []
     | otherwise = [x] ++ (fibonacci y (x+y))
 
+is_palindrome :: Integer -> Bool
+is_palindrome x = (show x) == reverse (show x)
+
 main :: IO()
 main = do
-    -- putStr "Enter a number: "
-    -- hFlush stdout
-    -- input <- getLine
-    -- let num = read input :: Integer
-    -- putStrLn . init $ prime_factors $ num
-    -- putStrLn (format_mul 3 5)
-    -- print (sum . filter even $ fibonacci 1 2)
+    putStr "Enter a number: "
+    hFlush stdout
+    input <- getLine
+    let num = read input :: Integer
+    putStrLn . init $ prime_factors $ num
+    -- #1
+    putStrLn (format_mul 3 5)
+    -- #2
+    print (sum . filter even $ fibonacci 1 2)
+    -- #3
     putStrLn . show . last $ factors 600851475143 2
+    -- #4
+    putStrLn . show . maximum $ [prod | x <- (reverse [100..999]), y <- (reverse [100..999]), let prod = x * y, is_palindrome prod]
+
