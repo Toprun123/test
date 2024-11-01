@@ -1,6 +1,8 @@
 module Main where
-import System.IO (hFlush, stdout)
+import System.IO
 import Data.List
+import Data.Char
+import Data.Ord (comparing)
 
 factors :: Integer -> Integer -> [Integer]
 factors x d
@@ -64,18 +66,59 @@ fibonacci x y
 is_palindrome :: Integer -> Bool
 is_palindrome x = (show x) == reverse (show x)
 
+get_calibration_val :: String -> Integer
+get_calibration_val inp = read (firstChar : [lastChar]) :: Integer
+    where
+        tmp = filter isDigit (get_val inp)
+        firstChar = tmp !! 0
+        lastChar = last tmp
+
+final_calib :: [String] -> Integer
+final_calib inp
+    | (length inp) == 0 = 0
+    | otherwise = (get_calibration_val (inp!!0)) + final_calib (tail inp)
+
+findPos :: String -> String -> Maybe Int
+findPos sub str = findIndex (isPrefixOf sub) (tails str)
+
+get_pos :: String -> String -> String -> (Int, Int, String)
+get_pos str sub rep =
+    case findPos sub str of
+        Just pos -> (pos, length sub, rep)
+        Nothing  -> (1000, 0, "")
+
+lowestIndex :: [(Int, Int, String)] -> (Int, Int, String)
+lowestIndex xs = minimumBy (comparing (\(x, _, _) -> x)) xs
+
+get_val :: String -> String
+get_val str
+    | x == 1000 = str
+    | otherwise = get_val (take (x+1) str ++ z ++ drop (x+1) str)
+    where
+        (x, y, z) = lowestIndex [
+                        get_pos str "one" "1",
+                        get_pos str "two" "2",
+                        get_pos str "three" "3",
+                        get_pos str "four" "4",
+                        get_pos str "five" "5",
+                        get_pos str "six" "6",
+                        get_pos str "seven" "7",
+                        get_pos str "eight" "8",
+                        get_pos str "nine" "9"
+                    ]
+
 main :: IO()
 main = do
     putStr "Enter a number: "
     hFlush stdout
     input <- getLine
     let num = read input :: Integer
+    putStrLn.init$prime_factors$num
     putStrLn$likes ["Peter", "Cow", "me", "he"]
     putStrLn.show$isSquare 25
     putStrLn.show$uniqueInOrder "AABBCCBB"
     putStrLn.show$getCountVowel "alpha"
     putStrLn.show$getUnique [0, 0, 1, 0, 0]
-    putStrLn.init$prime_factors$num
     -- #1
     putStrLn (format_mul 3 5)
     -- #2
@@ -84,4 +127,7 @@ main = do
     putStrLn.show.last$factors 600851475143 2
     -- #4
     putStrLn.show.maximum$[prod | x<-(reverse [100..999]), y<-(reverse [100..999]), let prod = x*y, is_palindrome prod]
-
+    -- Advent of Code 2023#1
+    handle <- openFile "a-of-cod2023#1" ReadMode
+    contents <- hGetContents handle
+    print (final_calib (lines contents))
